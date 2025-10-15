@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -8,12 +8,10 @@ export class StepperService {
   private totalSteps: number = 0;
   
   // Tracks the index of the last step that has been CREATED (rendered).
-  private createdStepsSubject = new BehaviorSubject<number>(1);
-  readonly createdSteps$: Observable<number> = this.createdStepsSubject.asObservable();
+   createdSteps = signal(1);
 
   // Tracks the index of the currently ACTIVE step for navigation.
-  private activeStepSubject = new BehaviorSubject<number>(1);
-  readonly activeStep$: Observable<number> = this.activeStepSubject.asObservable();
+  activeStep = signal(1);
 
   constructor() { }
 
@@ -22,31 +20,31 @@ export class StepperService {
   }
 
   nextStep(): void {
-    const currentCreated = this.createdStepsSubject.getValue();
-    const currentActive = this.activeStepSubject.getValue();
+    const currentCreated = this.createdSteps();
+    const currentActive = this.activeStep();
 
     if (currentCreated < this.totalSteps) {
       // RULE: Creates the next step and makes it active
-      this.createdStepsSubject.next(currentCreated + 1);
-      this.activeStepSubject.next(currentCreated + 1);
+      this.createdSteps.set(currentCreated + 1);
+      this.activeStep.set(currentCreated + 1);
     } else if (currentActive < this.totalSteps) {
       // RULE: All created, just moves the active pointer
-      this.activeStepSubject.next(currentActive + 1);
+      this.activeStep.set(currentActive + 1);
     }
   }
 
   prevStep(): void {
-    const currentActive = this.activeStepSubject.getValue();
+    const currentActive = this.activeStep();
     if (currentActive > 1) {
-      this.activeStepSubject.next(currentActive - 1);
+      this.activeStep.set(currentActive - 1);
     }
   }
 
   goToStep(stepIndex: number): void {
-    const currentCreated = this.createdStepsSubject.getValue();
+    const currentCreated = this.createdSteps();
     // Only allow navigating to steps that have already been created/rendered
     if (stepIndex >= 1 && stepIndex <= currentCreated) {
-      this.activeStepSubject.next(stepIndex);
+      this.activeStep.set(stepIndex);
     }
   }
 }
