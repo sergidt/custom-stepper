@@ -1,1 +1,63 @@
-/* You can add global styles to this file, and also import other style files */
+/* stepper.component.css */
+.vertical-stepper {
+    display: flex;
+    flex-direction: column; /* Rule: The alignment is vertical */
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .stepper-controls {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  /* step.component.css */
+  .step-container {
+    border-left: 2px solid #ddd;
+    margin-left: 10px;
+    padding-left: 15px;
+    padding-bottom: 20px;
+    position: relative;
+  }
+  
+  .step-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    cursor: pointer;
+  }
+  
+  .step-indicator {
+    /* Rule: Each item contains a number indicator */
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ddd;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    margin-right: 15px;
+    position: absolute;
+    left: -15px; /* Adjust to align with the border-left */
+    top: 10px;
+    z-index: 1;
+  }
+  
+  .step-container.active {
+    border-color: #007bff; /* Active step line color */
+  }
+  
+  .step-container.active .step-indicator {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .step-content {
+    padding: 10px;
+    border-top: 1px solid #eee;
+    margin-top: 10px;
+  }
