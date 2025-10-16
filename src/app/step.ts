@@ -23,16 +23,16 @@ import { CommonModule } from '@angular/common'; // Import needed for *ngIf
   </div>
 `,
 })
-export class StepComponent  {
- stepIndex = input.required<number>();
- 
-stepContent =  input.required<TemplateRef<any>>();
+export class StepComponent {
+  stepIndex = input.required<number>();
 
-isActive = computed(() => this.stepperService.activeStep() === this.stepIndex());
+  stepContent = input.required<TemplateRef<any>>();
 
-private stepperService = inject(StepperService);
+  isActive = computed(() => this.stepperService.activeStep() === this.stepIndex());
 
-goToStep() {
-  this.stepperService.goToStep(this.stepIndex());
-}
+  private stepperService = inject(StepperService);
+
+  goToStep() {
+    this.stepperService.goToStep(this.stepIndex());
+  }
 }

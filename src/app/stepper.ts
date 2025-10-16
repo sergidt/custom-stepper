@@ -31,7 +31,7 @@ import { Observable } from 'rxjs';
 export class StepperComponent implements AfterContentInit {
   // Capturamos todos los TemplateRef que el padre pasa como contenido.
   // El padre debe usar <ng-template> para definir los pasos.
-  stepTemplates = contentChildren(TemplateRef<any>);
+
   
   stepperService = inject( StepperService);
     stepsCreated = this.stepperService.createdSteps;
