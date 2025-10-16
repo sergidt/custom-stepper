@@ -1,4 +1,4 @@
-import { Component, ContentChildren, QueryList, AfterContentInit, inject, TemplateRef } from '@angular/core';
+import { Component, ContentChildren, QueryList, AfterContentInit, inject, TemplateRef, contentChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StepperService } from './stepper.service';
 import { StepComponent } from './step';
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
   template: `
     <div class="vertical-stepper">
       
-      @for (stepContent of stepTemplates; track $index) {
+      @for (stepContent of stepTemplates(); track $index) {
       @if (stepsCreated() >= $index + 1){
         <app-step 
           [stepIndex]="$index + 1"
@@ -31,7 +31,7 @@ import { Observable } from 'rxjs';
 export class StepperComponent implements AfterContentInit {
   // Capturamos todos los TemplateRef que el padre pasa como contenido.
   // El padre debe usar <ng-template> para definir los pasos.
-  @ContentChildren(TemplateRef) stepTemplates!: QueryList<TemplateRef<any>>;
+  stepTemplates = contentChildren(TemplateRef<any>);
   
   stepperService = inject( StepperService);
     stepsCreated = this.stepperService.createdSteps;
@@ -40,6 +40,6 @@ export class StepperComponent implements AfterContentInit {
 
   ngAfterContentInit() {
     // Establecemos el número total de pasos basado en los TemplateRefs capturados.
-    this.stepperService.setTotalSteps(this.stepTemplates.length);
+    this.stepperService.setTotalSteps(this.stepTemplates().length);
   }
 }
