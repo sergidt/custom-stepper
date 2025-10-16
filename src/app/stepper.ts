@@ -18,9 +18,6 @@ import { Observable } from 'rxjs';
       </ng-container>
 
       <div class="stepper-controls">
-        <button (click)="stepperService.prevStep()" [disabled]="activeStep() ! === 1">
-          Atrás
-        </button>
         <button (click)="stepperService.nextStep()" [disabled]="activeStep()! === stepTemplates.length">
           Siguiente
         </button>
