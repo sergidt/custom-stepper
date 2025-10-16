@@ -1,9 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class StepperService {
   private totalSteps: number = 0;
   
@@ -12,8 +10,6 @@ export class StepperService {
 
   // Tracks the index of the currently ACTIVE step for navigation.
   activeStep = signal(1);
-
-  constructor() { }
 
   setTotalSteps(count: number): void {
     this.totalSteps = count;
@@ -30,13 +26,6 @@ export class StepperService {
     } else if (currentActive < this.totalSteps) {
       // RULE: All created, just moves the active pointer
       this.activeStep.set(currentActive + 1);
-    }
-  }
-
-  prevStep(): void {
-    const currentActive = this.activeStep();
-    if (currentActive > 1) {
-      this.activeStep.set(currentActive - 1);
     }
   }
 

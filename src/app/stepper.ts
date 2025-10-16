@@ -10,13 +10,15 @@ import { Observable } from 'rxjs';
   imports: [CommonModule, StepComponent], // Importa módulos y componentes hijos
   template: `
     <div class="vertical-stepper">
-      <ng-container *ngFor="let stepContent of stepTemplates; let i = index">
+      
+      @for (stepContent of stepTemplates; track $index) {
+      @if (stepsCreated() >= $index + 1){
         <app-step 
-          *ngIf="stepsCreated() >= i + 1"
-          [stepIndex]="i + 1"
+          [stepIndex]="$index + 1"
           [stepContent]="stepContent" />
-      </ng-container>
-
+      }
+    }
+      
       <div class="stepper-controls">
         <button (click)="stepperService.nextStep()" [disabled]="activeStep()! === stepTemplates.length">
           Siguiente

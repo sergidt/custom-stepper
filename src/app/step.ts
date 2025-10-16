@@ -28,9 +28,7 @@ stepContent =  input.required<TemplateRef<any>>();
 
 isActive = computed(() => this.stepperService.activeStep() === this.stepIndex);
 
-
-constructor(private stepperService: StepperService) {}
-
+private stepperService = inject(StepperService);
 
 goToStep() {
   this.stepperService.goToStep(this.stepIndex);
